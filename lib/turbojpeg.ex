@@ -28,6 +28,17 @@ defmodule Turbojpeg do
   end
 
   @doc """
+  Same as `yuv_to_jpeg/5`, but raises in case of failure.
+  """
+  @spec yuv_to_jpeg!(binary(), width, height, quality, format) :: binary()
+  def yuv_to_jpeg!(yuv, width, height, quality, format) do
+    case Native.yuv_to_jpeg(yuv, width, height, quality, format) do
+      {:ok, binary} -> binary
+      {:error, reason} -> raise "cannot compress yuv into a jpeg: #{inspect(reason)}"
+    end
+  end
+
+  @doc """
   Converts jpeg to yuv
 
 
@@ -37,6 +48,17 @@ defmodule Turbojpeg do
   @spec jpeg_to_yuv(binary()) :: {:ok, binary()} | error()
   def jpeg_to_yuv(jpeg) do
     Native.jpeg_to_yuv(jpeg)
+  end
+
+  @doc """
+  Same as `jpeg_to_yuv/1`, but raises in case of failure.
+  """
+  @spec jpeg_to_yuv!(binary()) :: binary()
+  def jpeg_to_yuv!(jpeg) do
+    case Native.jpeg_to_yuv(jpeg) do
+      {:ok, binary} -> binary
+      {:error, reason} -> raise "cannot decompress jpeg: #{inspect(reason)}"
+    end
   end
 
   @doc """
