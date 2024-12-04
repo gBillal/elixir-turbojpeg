@@ -3,11 +3,11 @@ defmodule Turbojpeg.BundlexProject do
 
   def project() do
     [
-      natives: natives(Bundlex.platform())
+      natives: natives()
     ]
   end
 
-  def natives(_platform) do
+  def natives() do
     [
       turbojpeg_native: [
         interface: :nif,
